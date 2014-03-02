@@ -1,0 +1,10 @@
+entity/player/mod.rs:18:6: 18:20 error: unresolved name
+entity/player/mod.rs:18 impl entity::Entity for Player {}
+                             ^~~~~~~~~~~~~~
+entity/player/mod.rs:18:6: 18:20 error: use of undeclared module `entity`
+entity/player/mod.rs:18 impl entity::Entity for Player {}
+                             ^~~~~~~~~~~~~~
+entity/player/mod.rs:18:6: 18:20 error: attempt to implement a nonexistent trait `entity::Entity`
+entity/player/mod.rs:18 impl entity::Entity for Player {}
+                             ^~~~~~~~~~~~~~
+error: aborting due to 3 previous errors
