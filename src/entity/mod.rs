@@ -1,3 +1,3 @@
 pub mod player;
 
-trait Entity {}
+pub trait Entity {}
