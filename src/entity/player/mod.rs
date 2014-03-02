@@ -6,6 +6,9 @@ pub enum Gender {
 }
 */
 
+use entity::Entity;
+
+#[deriving(Clone)]
 pub struct Player;
     //name: ~str,
     //gender: gender
@@ -15,4 +18,4 @@ pub fn new () -> ~Player {
     ~Player
 }
 
-impl entity::Entity for Player {}
+impl Entity for Player {}

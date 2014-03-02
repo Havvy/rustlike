@@ -14,11 +14,11 @@ pub fn new (player: ~Player) -> World {
 
     use make_vec = std::vec::from_elem;
 
-    let exterior = make_vec(80, Tile{passable: false});
+    let exterior = make_vec(80, Tile{passable: false, entity: ~None});
 
-    let mut interior= make_vec(80, Tile{passable: true});
-    interior[0] = Tile{passable: false};
-    interior[79] = Tile{passable: false};
+    let mut interior = make_vec(80, Tile{passable: true, entity: ~None});
+    interior[0] = Tile{passable: false, entity: ~None};
+    interior[79] = Tile{passable: false, entity: ~None};
 
     let mut map = make_vec(24, interior);
     map[0] = exterior.clone();
@@ -34,7 +34,7 @@ mod Tile {
     #[deriving(Clone)]
     pub struct Tile {
         passable: bool,
-        entity: ~Entity
+        entity: ~Option<~Entity:>
     }
 
     impl fmt::Show for Tile {
