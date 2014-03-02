@@ -1,40 +1,60 @@
+use std::cell::RefCell;
+
+use entity::Entity;
 use entity::player::Player;
 
 pub struct World {
     levels: ~[Level],
-    player: ~Player
+    player: Player
+}
+
+impl World {
+    pub fn new (player: Player) -> World {
+        use self::Tile::Tile;
+        use make_vec = std::vec::from_fn;
+
+        fn exterior () -> ~[Tile] {
+            make_vec(80, |_n| -> Tile {
+                Tile{passable: false, entity: RefCell::new(None)}
+            })
+        }
+
+        fn interior () -> ~[Tile] {
+            make_vec(80, |n| -> Tile {
+                match n {
+                    0 => {Tile{passable: false, entity: RefCell::new(None)}},
+                    79 => {Tile{passable: false, entity: RefCell::new(None)}},
+                    _ => {Tile{passable: true, entity: RefCell::new(None)}}
+                }
+            })
+        }
+
+        let map: ~[~[Tile]] = make_vec(24, |n| -> ~[Tile] {
+            match n {
+                0 => { exterior() }
+                23 => { exterior() }
+                _ => { interior() }
+            }
+        });
+
+        map[12][39].entity.set(Some(~player as ~Entity));
+
+        World{levels: ~[Level{map: map}], player: player}
+    }
 }
 
 pub struct Level {
     map: ~[~[Tile::Tile]]
 }
 
-pub fn new (player: ~Player) -> World {
-    use self::Tile::Tile;
-
-    use make_vec = std::vec::from_elem;
-
-    let exterior = make_vec(80, Tile{passable: false, entity: ~None});
-
-    let mut interior = make_vec(80, Tile{passable: true, entity: ~None});
-    interior[0] = Tile{passable: false, entity: ~None};
-    interior[79] = Tile{passable: false, entity: ~None};
-
-    let mut map = make_vec(24, interior);
-    map[0] = exterior.clone();
-    map[23] = exterior.clone();
-
-    World{levels: ~[Level{map: map}], player: player}
-}
-
 mod Tile {
     use std::fmt;
+    use std::cell::RefCell;
     use entity::Entity;
 
-    #[deriving(Clone)]
     pub struct Tile {
         passable: bool,
-        entity: ~Option<~Entity:>
+        entity: RefCell<Option<~Entity:>>
     }
 
     impl fmt::Show for Tile {
@@ -44,6 +64,14 @@ mod Tile {
     }
 
     fn to_str (tile: &Tile) -> ~str {
-        if tile.passable {~"."} else {~"#"}
+        match tile.entity.borrow().get() {
+            &None => {
+                if tile.passable {~"."} else {~"#"}
+            },
+
+            _ => {
+                ~"@"
+            }
+        }
     }
 }

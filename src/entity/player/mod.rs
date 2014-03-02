@@ -14,8 +14,12 @@ pub struct Player;
     //gender: gender
 //}
 
-pub fn new () -> ~Player {
-    ~Player
+impl Player {
+    pub fn new () -> Player {
+        Player
+    }
 }
 
-impl Entity for Player {}
+impl Entity for Player {
+
+}

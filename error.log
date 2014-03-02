@@ -1,3 +1,0 @@
-src/world/mod.rs:37:9: 37:34 error: failed to find an implementation of trait std::clone::Clone for ~entity::Entity<no-bounds>
-src/world/mod.rs:37         entity: ~Option<~Entity:>
-                            ^~~~~~~~~~~~~~~~~~~~~~~~~

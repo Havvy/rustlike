@@ -45,8 +45,8 @@ fn finalize_ncurses () {
 }
 
 fn initialize_game () -> World {
-    let player = entity::player::new();
-    world::new(player)
+    let player = entity::player::Player::new();
+    world::World::new(player)
 }
 
 fn finalize_game (_world: &World) {

@@ -1,3 +1,3 @@
 pub mod player;
 
-pub trait Entity : Clone {}
+pub trait Entity {}
