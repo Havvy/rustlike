@@ -1,5 +1,4 @@
 use std::cell::RefCell;
-use std::fmt;
 use std::rc::Rc;
 use std::vec_ng::Vec;
 
@@ -99,15 +98,10 @@ impl World {
     }
 }
 
+#[deriving(Clone)]
 pub struct Tile {
     passable: bool,
     entity: RefCell<Option<Rc<RefCell<Player>>>>
-}
-
-impl fmt::Show for Tile {
-    fn fmt (&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f.buf, "{}", self.to_str())
-    }
 }
 
 impl Tile {
@@ -118,17 +112,6 @@ impl Tile {
         Tile {
             passable: passable,
             entity: RefCell::new(None)
-        }
-    }
-    pub fn to_str (&self) -> ~str {
-        match *self.entity.borrow().get() {
-            None => {
-                if self.passable {~"."} else {~"#"}
-            },
-
-            _ => {
-                ~"@"
-            }
         }
     }
 
