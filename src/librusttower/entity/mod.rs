@@ -1,6 +1,7 @@
 pub mod player {
-    use world::Position;
+    use position::Position;
     
+    #[deriving(Clone)]
     pub struct Player {
         pos: Position
     }
@@ -11,7 +12,7 @@ pub mod player {
                 pos: Position {
                     floor: 0,
                     row: 12,
-                    col: 39
+                    col: 40
                 }
             }
         }

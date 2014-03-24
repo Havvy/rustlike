@@ -48,7 +48,6 @@ fn finalize_ncurses () {
 
 fn display (state: &GameState) {
     use ncurses::*;
-    use std::vec_ng::Vec;
 
     let floorplan = &state.floorplan;
 
@@ -75,6 +74,37 @@ fn key_to_input (key: i32) -> rusttower::Input {
         KEY_RIGHT => { rusttower::MoveRight },
         // F1 | 'q' To quit the game.
         KEY_F1 | 113 => { rusttower::QuitGame },
+        // < character
+        60 => { rusttower::ClimbDown },
+        // > character
+        62 => { rusttower::ClimbUp },
         _ => { rusttower::NoInput }
+    }
+}
+
+struct DisplayTile {
+    char: i32,
+    // attributes: ???
+}
+
+trait Display {
+    fn to_display_tile (&self) -> DisplayTile;
+}
+
+impl Display for SendTile {
+    fn to_display_tile (&self) -> DisplayTile {
+        if self.entity.is_some() {
+            return DisplayTile {
+                char: 64 // @ symbol
+            };
+        }
+
+        if !self.itemstack.empty() {
+            return DisplayTile {
+                char: 64 // TODO
+            };
+        }
+
+        self.feature.to_display_tile()
     }
 }
